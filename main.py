@@ -30,6 +30,7 @@ def main():
 
     font = pygame.font.SysFont(None, 48)
     time_survived = 0
+    split_counter = 0
 
     while True:
         log_state()
@@ -38,8 +39,10 @@ def main():
                 return
         screen.fill("black")
         text_surface = font.render(f"SECONDS SURVIVED: {int(time_survived)}", True, "green")
+        asteroid_text = font.render(f"BOOM: {split_counter}", True, "red")
         time_survived += dt
-        screen.blit(text_surface, (50,50))
+        screen.blit(text_surface, (50, 50))
+        screen.blit(asteroid_text, (1000, 50))
         updatable.update(dt)
         for asteroid in asteroids:
             if asteroid.collides_with(player) == True:
@@ -49,6 +52,7 @@ def main():
             for shot in shots:
                 if asteroid.collides_with(shot) == True:
                     log_event("asteroid_shot")
+                    split_counter += 1
                     shot.kill()
                     asteroid.split()
         for thing in drawable:
