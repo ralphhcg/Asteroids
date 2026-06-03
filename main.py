@@ -28,12 +28,18 @@ def main():
 
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 
+    font = pygame.font.SysFont(None, 48)
+    time_survived = 0
+
     while True:
         log_state()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
         screen.fill("black")
+        text_surface = font.render(f"SECONDS SURVIVED: {int(time_survived)}", True, "green")
+        time_survived += dt
+        screen.blit(text_surface, (50,50))
         updatable.update(dt)
         for asteroid in asteroids:
             if asteroid.collides_with(player) == True:
